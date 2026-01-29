@@ -904,13 +904,13 @@ jobs:
             echo "CONFIG_DEBUG_INFO_BTF=n" >> "$CONFIG_FILE"
           fi
 
-          # 移除构建审查
-          sed -i 's/check_defconfig//' ./build.config.gki
-
           # eBPF/BTF：生成 /sys/kernel/btf/vmlinux（用于导出 vmlinux.h）
           sed -i '/^CONFIG_DEBUG_INFO=/d;/^CONFIG_DEBUG_INFO_BTF=/d' "$CONFIG_FILE"
           echo "CONFIG_DEBUG_INFO=y" >> "$CONFIG_FILE"
           echo "CONFIG_DEBUG_INFO_BTF=y" >> "$CONFIG_FILE"
+
+          # 移除构建审查
+          sed -i 's/check_defconfig//' ./build.config.gki
           
       - name: Fix IPv6_NAT Error
         if: ${{ github.event.inputs.NETFILTER == 'true' }}
